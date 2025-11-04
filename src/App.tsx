@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
+import { QueryProvider } from "@/lib/QueryProvider";
 import Layout from "@/components/Layout";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
@@ -24,43 +25,45 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/ads"
-            element={
-              <PrivateRoute>
-                <Ads />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/devices"
-            element={
-              <PrivateRoute>
-                <Devices />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/reports"
-            element={
-              <PrivateRoute>
-                <Reports />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-      </AuthProvider>
+      <QueryProvider>
+        <AuthProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/ads"
+              element={
+                <PrivateRoute>
+                  <Ads />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/devices"
+              element={
+                <PrivateRoute>
+                  <Devices />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/reports"
+              element={
+                <PrivateRoute>
+                  <Reports />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </AuthProvider>
+      </QueryProvider>
     </BrowserRouter>
   );
 }

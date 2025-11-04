@@ -1,23 +1,20 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import api from "@/services/api";
-import { type DashboardStats } from "@/types";
+import type { DashboardStats } from "@/types";
 import { Users, Eye, Zap, Monitor } from "lucide-react";
 
 export default function Dashboard() {
-  const [stats, setStats] = useState<DashboardStats | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    api
-      .get<{ success: boolean; stats: DashboardStats }>(
+  const { data: stats, isLoading } = useQuery({
+    queryKey: ["dashboard-stats"],
+    queryFn: async () => {
+      const res = await api.get<{ success: boolean; stats: DashboardStats }>(
         "/api/reports/dashboard"
-      )
-      .then((res) => setStats(res.data.stats))
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
-  }, []);
+      );
+      return res.data.stats;
+    },
+  });
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="text-gray-500">Loading...</div>
