@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "@/services/api";
-import { DashboardStats } from "@/types";
+import { type DashboardStats } from "@/types";
 import { Users, Eye, Zap, Monitor } from "lucide-react";
 
 export default function Dashboard() {

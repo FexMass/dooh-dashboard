@@ -3,10 +3,10 @@ import {
   useContext,
   useState,
   useEffect,
-  ReactNode,
+  type ReactNode,
 } from "react";
 import api from "@/services/api";
-import { User, AuthResponse } from "@/types";
+import { type User, type AuthResponse } from "@/types";
 
 interface AuthContextType {
   user: User | null;
